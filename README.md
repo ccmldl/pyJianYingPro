@@ -1,4 +1,4 @@
-# pyJianYingDraft
+# PyJianYingPro
 ### 轻量、灵活、易上手的Python剪映草稿生成及导出工具，构建全自动视频剪辑/混剪流水线！
 
 > ℹ 欢迎为本项目补充6+版本草稿文件的解密方式
@@ -63,10 +63,10 @@
 # 安装
 pyJianYingDraft现已支持pip安装（不含demo），推荐使用开发时测试的Python版本3.8或3.11
 ```
-pip install pyJianYingDraft
+pip install PyJianYingPro
 ```
 
-> ℹ 如遇安装后import失败, 可能与uiautomation的兼容性问题有关，参见[相关issue](https://github.com/GuanYixuan/pyJianYingDraft/issues/12)
+> ℹ 如遇安装后import失败, 可能与uiautomation的兼容性问题有关，参见[相关issue](https://github.com/GuanYixuan/PyJianYingPro/issues/12)
 
 # 快速上手
 例程`demo.py`将创建包含音视频素材和一行文本的剪映草稿文件，并且添加了音频淡入、视频入场动画、转场效果和文本气泡/花字。
@@ -103,7 +103,7 @@ pip install pyJianYingDraft
 推荐使用`Draft_folder`来管理剪映的草稿文件夹（可以在剪映的`全局设置`-`草稿位置`中查询），这样能够方便地根据已有模板生成新草稿。
 
 ```python
-import pyJianYingDraft as draft
+import PyJianYingPro as draft
 
 draft_folder = draft.Draft_folder("<剪映草稿文件夹>")  # 一般形如 ".../JianyingPro Drafts"
 script = draft_folder.duplicate_as_template("模板草稿", "新草稿")  # 复制"模板草稿"，并命名为"新草稿"，同时打开新草稿供编辑
@@ -125,7 +125,7 @@ script.save()  # 保存你的"新草稿"
 `Draft_folder`也有相应的方法来提取指定草稿的素材元数据。
 
 ```python
-import pyJianYingDraft as draft
+import PyJianYingPro as draft
 
 draft_folder = draft.Draft_folder("<剪映草稿文件夹>")
 draft_folder.inspect_material("草稿名称")
@@ -173,7 +173,7 @@ script.replace_material_by_name("audio.mp3", new_material)  # 替换名称为"au
 
 此过程分为两步：**选取轨道**和**替换素材**，以上方音频素材的替换为例：
 ```python
-from pyJianYingDraft import trange, Shrink_mode, Extend_mode
+from PyJianYingPro import trange, Shrink_mode, Extend_mode
 
 audio_track = script.get_imported_track(
     draft.Track_type.audio,                # 选取导入的音频轨道
@@ -253,15 +253,15 @@ target_script.import_track(
 
 > ℹ 本部分功能**在剪映专业版5.9和6.8中测试通过**
 
-> ℹ 有用户反映部分Python版本(如3.13)下`uiautomation`会出现依赖问题, 推荐使用3.8、3.10或3.11, [详见此处](https://github.com/GuanYixuan/pyJianYingDraft/issues/12)
+> ℹ 有用户反映部分Python版本(如3.13)下`uiautomation`会出现依赖问题, 推荐使用3.8、3.10或3.11, [详见此处](https://github.com/GuanYixuan/PyJianYingPro/issues/12)
 
 > ⚠️ 请**确认有导出草稿的相关权限(不使用VIP功能或已开通VIP)**, 否则可能陷入死循环
 
 导出利用`Jianying_controller`类进行，具体用法如下：
 
 ```python
-import pyJianYingDraft as draft
-from pyJianYingDraft import Export_resolution, Export_framerate
+import PyJianYingPro as draft
+from PyJianYingPro import Export_resolution, Export_framerate
 
 # 此前需要将剪映打开，并位于目录页
 ctrl = draft.Jianying_controller()
@@ -296,8 +296,8 @@ for name in draft_names:
 
 例如：
 ```python
-import pyJianYingDraft as draft
-from pyJianYingDraft import SEC, tim, trange
+import PyJianYingPro as draft
+from PyJianYingPro import SEC, tim, trange
 
 # 1秒钟
 assert 1000000 == SEC == tim("1s") == tim("0.01666667m")
@@ -317,8 +317,8 @@ assert seg.target_timerange.start + 2*SEC == seg.target_timerange.start + tim("2
 以下以`Video_segment`为例，`Audio_segment`的用法相同：
 ```python
 import os
-import pyJianYingDraft as draft
-from pyJianYingDraft import trange, SEC
+import PyJianYingPro as draft
+from PyJianYingPro import trange, SEC
 
 # 创建草稿文件及三个轨道
 script = draft.Script_file(1080, 1080)
@@ -377,7 +377,7 @@ script.add_segment(video_segment, "背景")
 
 下方的例子将创建一个视频片段，并设置其不透明度为0.5、打开水平翻转：
 ```python
-from pyJianYingDraft import Clip_settings
+from PyJianYingPro import Clip_settings
 video_segment = draft.Video_segment(video_material,
                                     draft.Timerange(0, video_material.duration),      # 与素材等长
                                     clip_settings=Clip_settings(alpha=0.5,            # 不透明度为0.5
@@ -394,8 +394,8 @@ video_segment = draft.Video_segment(video_material,
 下方的例子尝试使用两个不透明度关键帧模拟视频的淡出效果：
 ```python
 import os
-import pyJianYingDraft as draft
-from pyJianYingDraft import Keyframe_property, SEC
+import PyJianYingPro as draft
+from PyJianYingPro import Keyframe_property, SEC
 
 # 创建草稿及视频轨道
 script = draft.Script_file(1080, 1080)
@@ -430,7 +430,7 @@ audio_segment.add_keyframe("0s", 0.6) # 片段开始时的音量为60%
 ### 蒙版
 蒙版的添加非常简单：调用`Video_segment`的`add_mask`方法即可：
 ```python
-from pyJianYingDraft import Mask_type
+from PyJianYingPro import Mask_type
 
 # 添加一个线性蒙版，中心点在素材的(100, 0)像素处，顺时针旋转45度
 video_segment1.add_mask(Mask_type.线性, center_x=100, rotation=45)
@@ -472,7 +472,7 @@ assert Video_scene_effect_type.from_name("__全息 扫描__") == Video_scene_eff
 
 下方的例子为视频片段添加一个`全息扫描`特效，并且指定其`氛围`参数为（剪映中的）100，其余参数默认：
 ```python
-from pyJianYingDraft import Video_scene_effect_type
+from PyJianYingPro import Video_scene_effect_type
 
 video_segment.add_effect(Video_scene_effect_type.全息扫描,
                          [None, None, 100.0]) # 不设置前两个参数, 第三个参数（氛围）为100，其余参数也不设置
@@ -484,7 +484,7 @@ video_segment.add_effect(Video_scene_effect_type.全息扫描,
 与特效不同的是，滤镜只支持一个“滤镜强度”参数，且仅当所选滤镜能够调节强度时有效。
 
 ```python
-from pyJianYingDraft import Filter_type
+from PyJianYingPro import Filter_type
 
 video_segment1.add_filter(Filter_type.原生肤, 10)  # 设置"原生肤"强度为10
 video_segment2.add_filter(Filter_type.冰雪世界, 50)  # 设置"冰雪世界"强度为50
@@ -501,7 +501,7 @@ script.add_track(draft.Track_type.filter, "my_filter")  # 创建名为"my_filter
 
 接下来便可使用`add_effect`和`add_filter`方法向这些轨道添加片段：
 ```python
-from pyJianYingDraft import Video_scene_effect_type, Filter_type, trange
+from PyJianYingPro import Video_scene_effect_type, Filter_type, trange
 
 # 在特效轨道上添加一个"胶片闪切"特效，持续5秒，并设置其参数
 script.add_effect(Video_scene_effect_type.胶片闪切, trange("0s", "5s"),
@@ -521,7 +521,7 @@ script.add_filter(Filter_type.哈苏蓝, trange(0, script.duration),
 
 以下是为一个文本片段添加三种动画的例子：
 ```python
-from pyJianYingDraft import Text_intro, Text_outro, Text_loop_anim
+from PyJianYingPro import Text_intro, Text_outro, Text_loop_anim
 
 text_seg.add_animation(Text_intro.复古打字机).add_animation(Text_outro.弹簧)
 text_seg.add_animation(Text_loop_anim.色差故障)  # 注意：循环动画必须在出入场动画之后添加
@@ -534,8 +534,8 @@ text_seg.add_animation(Text_loop_anim.色差故障)  # 注意：循环动画必�
 
 例如：
 ```python
-import pyJianYingDraft as draft
-from pyJianYingDraft import Font_type, Text_style, Clip_settings
+import PyJianYingPro as draft
+from PyJianYingPro import Font_type, Text_style, Clip_settings
 
 # 带下划线、位置及大小类似字幕的浅蓝色文本
 seg1 = draft.Text_segment("Subtitle", trange("0s", "10s"),
@@ -553,7 +553,7 @@ seg1 = draft.Text_segment("Subtitle", trange("0s", "10s"),
 
 例如：
 ```python
-import pyJianYingDraft as draft
+import PyJianYingPro as draft
 
 script = draft.Script_file(1080, 1080)
 

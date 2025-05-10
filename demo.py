@@ -1,7 +1,7 @@
 # 导入模块
 import os
-import pyJianYingDraft as draft
-from pyJianYingDraft import Intro_type, Transition_type, trange, tim
+import PyJianYingPro as draft
+from PyJianYingPro import Intro_type, Transition_type, trange, tim
 
 # 保存路径
 DUMP_PATH = r"<你的草稿文件夹>/draft_content.json"

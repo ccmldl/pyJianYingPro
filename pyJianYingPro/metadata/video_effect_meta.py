@@ -6,6 +6,13 @@ from .effect_meta import Effect_meta, Effect_param
 class Video_scene_effect_type(Effect_enum):
     """剪映自带的画面特效类型"""
 
+    手持运镜    = Effect_meta("手持运镜", True, "7434412782293881382", "89308029", "e83d397fd1b2c5fc0a3099a9a535c493", [
+                              Effect_param("effects_adjust_speed", 0.330, 0.000, 1.000)])
+
+    """参数:
+        - effects_adjust_speed: 默认0.33, 0.00 ~ 1.00
+    """
+
     _1998       = Effect_meta("1998", False, "6981791065204331044", "1183068", "d53096e8139dd33f7a2be6adcd7ce56b", [
                               Effect_param("effects_adjust_filter", 1.000, 0.000, 1.000),
                               Effect_param("effects_adjust_texture", 1.000, 0.000, 1.000)])
